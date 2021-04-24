@@ -6,8 +6,7 @@ import java.util.ArrayList;
 public class Parsing {
     private Document document;
     private static Elements elements;
-    private static ArrayList<String> linkList = new ArrayList<>();
-
+    private static ArrayList<Pojo> date = new ArrayList<>();
 
     private Parsing(){
         try {
@@ -19,20 +18,22 @@ public class Parsing {
         }
     }
 
-    private static void addDataInArrayList(String url){
-        linkList.add(url);
+    private static void addDataInArrayList(){
+        elements.forEach(el -> date.add(new Pojo(el.attr("href"))));
     }
 
     public static void show(){
-        for(String el : linkList){
-            System.out.println(el);
+        if (!date.isEmpty()){
+            date.forEach(el -> System.out.println(el.getAdLink()));
+            return;
         }
+        System.out.println("The list is empty");
     }
 
     public static void start (){
         new Parsing();
         //elements.forEach(el -> System.out.println(el.attr("href")));
-        elements.forEach(el -> addDataInArrayList(el.attr("href")));
+        addDataInArrayList();
 
     }
 
